@@ -32,11 +32,18 @@ def choose_row(A, enter_col):
 
 if __name__ == '__main__':
     A = np.array([
-        [4/3, 1,  1, 0, 6],
-        [1/3, 0,  2, 1, 2],
-        [ -3, 0, -7, 0,-20],
+        [-1,  2, -1, -1, 1, 0, 0,  8],
+        [ 2,  4,  0,  0, 0, 1, 0, 10],
+        [ 0,  0,  1,  1, 0, 0, 1,  3],
+        [ 2, -3,  0, -5, 0, 0, 0,  0],
     ], dtype=np.float32)
-    pivot_col = choose_col(A)
-    pivot_row = choose_row(A, pivot_col)
-    pivoted = simplex_pivot(A, pivot_row, pivot_col)
-    print(pivoted)
+
+    while True:
+        pivot_col = choose_col(A)
+        if pivot_col is None:
+            break
+        pivot_row = choose_row(A, pivot_col)
+        pivoted = simplex_pivot(A, pivot_row, pivot_col)
+        A = pivoted
+
+    print(A)
