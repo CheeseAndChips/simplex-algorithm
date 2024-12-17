@@ -7,16 +7,16 @@
   outputs = { self, nixpkgs, flake-utils }:
   let
     pythonshell = import ./shell.nix;
-    docflake = import ./doc/flake.nix;
-    docflakeout = docflake.outputs {
-      inherit self;
-      inherit nixpkgs;
-      inherit flake-utils;
-    };
+    # docflake = import ./doc/flake.nix;
+    # docflakeout = docflake.outputs {
+    #   inherit self;
+    #   inherit nixpkgs;
+    #   inherit flake-utils;
+    # };
   in {
     devShell.x86_64-linux = pythonshell {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      inputsFrom = [ docflakeout.packages.x86_64-linux.default ];
+      inputsFrom = [ ]; # [ docflakeout.packages.x86_64-linux.default ];
     };
   };
 }
