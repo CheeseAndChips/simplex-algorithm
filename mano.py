@@ -30,6 +30,15 @@ def choose_row(A, enter_col):
     row_idx = np.argmin(ratios)
     return positive_rows[row_idx]
 
+def get_basis_indices(A):
+    num_cols = A.shape[1]
+    basis_indices = []
+    for col in range(num_cols - 1):
+        column = A[:, col]
+        if np.count_nonzero(column) == 1 and np.sum(column) == 1:
+            basis_indices.append(col)
+    return basis_indices
+
 if __name__ == '__main__':
     A = np.array([
         [-1,  2, -1, -1, 1, 0, 0,  8],
@@ -47,3 +56,4 @@ if __name__ == '__main__':
         A = pivoted
 
     print(A)
+    print(get_basis_indices(A))
