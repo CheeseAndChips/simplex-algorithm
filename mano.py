@@ -39,14 +39,7 @@ def get_basis_indices(A):
             basis_indices.append(col)
     return basis_indices
 
-if __name__ == '__main__':
-    A = np.array([
-        [-1,  2, -1, -1, 1, 0, 0,  8],
-        [ 2,  4,  0,  0, 0, 1, 0, 10],
-        [ 0,  0,  1,  1, 0, 0, 1,  3],
-        [ 2, -3,  0, -5, 0, 0, 0,  0],
-    ], dtype=np.float32)
-
+def solve(A, n):
     while True:
         pivot_col = choose_col(A)
         if pivot_col is None:
@@ -54,6 +47,28 @@ if __name__ == '__main__':
         pivot_row = choose_row(A, pivot_col)
         pivoted = simplex_pivot(A, pivot_row, pivot_col)
         A = pivoted
+        print(A)
 
+    indices = get_basis_indices(A)
+    print(f'Bazės indeksai: {indices}')
+    rhs = A[:, -1]
+    f_val = -A[-1][-1]
+    for i in range(n):
+        if i not in indices:
+            print(f'x{i+1} = 0')
+        else:
+            r = A[:, i]
+            ind = np.where(r == 1)[0][0]
+            print(f'x{i+1} = {rhs[ind]}')
+    print(f'f-jos reikšmė: {f_val}')
+
+if __name__ == '__main__':
+    A = np.array([
+        [-1,  2, -1, -1, 1, 0, 0,  8],
+        [ 2,  4,  0,  0, 0, 1, 0, 10],
+        [ 0,  0,  1,  1, 0, 0, 1,  3],
+        [ 2, -3,  0, -5, 0, 0, 0,  0],
+    ], dtype=np.float32)
     print(A)
-    print(get_basis_indices(A))
+    solve(A, 4)
+
